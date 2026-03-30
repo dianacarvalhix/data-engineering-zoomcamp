@@ -10,6 +10,6 @@ RUN uv sync --locked
 RUN pip install pandas pyarrow
 #ENV PATH="/code/.venv/bin:$PATH"  ####if uncomment this take out uv run from entrypoint
 
-COPY pipeline.py .
+COPY ingest_data.py .
 
-ENTRYPOINT ["uv", "run", "python","pipeline.py"]
+ENTRYPOINT ["uv", "run", "python","ingest_data.py"]
