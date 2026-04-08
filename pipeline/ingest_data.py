@@ -83,6 +83,9 @@ def run():
 
  """
 
+def ingest_full_table(url, table_name, engine):
+    df = pd.read_csv(url)
+    df.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
 
 @click.command()
 @click.option('--pg-user', default='root', help='PostgreSQL username')
@@ -117,6 +120,14 @@ def run(pg_user, pg_pass, pg_host, pg_port, pg_db, year, month, chunksize, targe
         df_chunk.to_sql(name=target_table, 
                         con=engine, 
                         if_exists='append')
+
+
+    ingest_full_table(
+    "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv",
+    "taxi_zone_lookup",
+     engine
+    )
+    print("Taxi zone lookup table ingested.")
 
 if __name__== '__main__':
     run()
